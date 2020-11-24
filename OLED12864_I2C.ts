@@ -130,7 +130,7 @@ namespace OLED12864_I2C {
 
     function set_pos(col: number = 0, page: number = 0) {
         cmd1(0xb0 | page) // page number
-        let c = col * (_ZOOM + 1)
+        let c = col
         cmd1(0x00 | (c % 16)) // lower start column address
         cmd1(0x10 | (c >> 4)) // upper start column address    
     }
