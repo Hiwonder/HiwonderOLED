@@ -154,21 +154,24 @@ namespace OLED12864_I2C {
     export function pixel(x: number, y: number, color: number = 1) {
         let page = y >> 3
         let shift_page = y % 8
-        let ind = x * (_ZOOM + 1) + page * 128 + 1
+        let ind = x + page * 128 + 1
         let b = (color) ? (_screen[ind] | (1 << shift_page)) : clrbit(_screen[ind], shift_page)
         _screen[ind] = b
         set_pos(x, page)
-        if (_ZOOM) {
-            _screen[ind + 1] = b
-            _buf3[0] = 0x40
-            _buf3[1] = _buf3[2] = b
-            pins.i2cWriteBuffer(_I2CAddr, _buf3)
-        }
-        else {
+        // if (_ZOOM) {
+        //     _screen[ind + 1] = b
+        //     _buf3[0] = 0x40
+        //     _buf3[1] = _buf3[2] = b
+        //     pins.i2cWriteBuffer(_I2CAddr, _buf3)
+        // }
+        // else {
+        //     _buf2[0] = 0x40
+        //     _buf2[1] = b
+        //     pins.i2cWriteBuffer(_I2CAddr, _buf2)
+        // }
             _buf2[0] = 0x40
             _buf2[1] = b
             pins.i2cWriteBuffer(_I2CAddr, _buf2)
-        }
     }
 
     /**
